@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import resources.job_data.csv;
 
 /**
  * Created by LaunchCode
@@ -10,7 +11,7 @@ public class TechJobs {
 
     static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -39,42 +40,27 @@ public class TechJobs {
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
-                    printJobs(JobData.findAll());
+                    printAllColumns();
                 } else {
-
-                    ArrayList<String> results = JobData.findAll(columnChoice);
-
-                    System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
-
-                    // Print list of skills, employers, etc
-                    for (String item : results) {
-                        System.out.println(item);
-                    }
+                    printColumnValues(columnChoice);
                 }
 
             } else { // choice is "search"
-
-                // How does the user want to search (e.g. by skill or employer)
-                String searchField = getUserSelection("Search by:", columnChoices);
 
                 // What is their search term?
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
 
-                if (searchField.equals("all")) {
-                    printJobs(JobData.findByValue(searchTerm));
-                } else {
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
-                }
+                printSearchResults(searchTerm);
             }
         }
     }
 
-    // ﻿Returns the key of the selected item from the choices Dictionary
+    // Returns the key of the selected item from the choices Dictionary
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
 
         int choiceIdx = -1;
-        Boolean validChoice = false;
+        boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
 
         // Put the choices in an ordered structure so we can
@@ -112,14 +98,49 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
-    // Print a list of jobs
-    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+    // Print all columns
+    private static void printAllColumns() {
+        for (String key : JobData.findAll().get(0).keySet()) {
+            System.out.println(key);
+        }
+    }
 
-        System.out.println("printJobs is not implemented yet");
+    // Print specific column values
+    private static void printColumnValues(String columnChoice) {
+        ArrayList<String> results = JobData.findAll(columnChoice);
+
+        System.out.println("\n*** All " + columnChoice + " Values ***");
+
+        if (results.isEmpty()) {
+            System.out.println("No results found.");
+        } else {
+            for (String item : results) {
+                System.out.println(item);
+            }
+        }
+    }
+
+    // Print search results across all columns
+    private static void printSearchResults(String searchTerm) {
+        ArrayList<HashMap<String, String>> searchResults = JobData.findByValue(searchTerm);
+
+        if (searchResults.isEmpty()) {
+            System.out.println("No results found for '" + searchTerm + "'.");
+        } else {
+            System.out.println("\nSearch Results:");
+            for (HashMap<String, String> job : searchResults) {
+                for (Map.Entry<String, String> entry : job.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    System.out.println(key + ": " + value);
+                }
+                System.out.println("---------------");
+            }
+        }
     }
 }

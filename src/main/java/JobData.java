@@ -1,3 +1,4 @@
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -94,9 +95,23 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+            for (String key : row.keySet()) {
+                String cellValue = row.get(key);
+                if (cellValue != null && cellValue.toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(row);
+                    break;
+                }
+            }
+        }
+
         // TODO - implement this method
-        return null;
+        return jobs;
     }
+//this modification will search for the provided 'value' string case-insensitively across all columns and return
+//    matching job details.
 
     /**
      * Read in data from a CSV file and store it in a list
