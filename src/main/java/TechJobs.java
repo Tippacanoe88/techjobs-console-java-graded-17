@@ -1,8 +1,9 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import resources.job_data.csv;
+//import java.util.ArrayList;
+////import java.util.HashMap;
+////import java.util.Map;
+////import java.util.Scanner;
+////import resources.job_data.csv;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -63,7 +64,7 @@ public class TechJobs {
         boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
 
-        // Put the choices in an ordered structure so we can
+        // Put the choices in an ordered structure, so we can
         // associate an integer with each one
         int i = 0;
         for (String choiceKey : choices.keySet()) {

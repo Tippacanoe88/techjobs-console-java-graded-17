@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    testCompileOnly 'junit:junit:3.8.1'
     testCompileOnly 'junit:junit:4.12' 
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.1'
     implementation('org.apache.commons:commons-csv:1.4')
