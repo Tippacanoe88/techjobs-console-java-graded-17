@@ -12,13 +12,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.commons:commons-csv:1.+'
-    testCompileOnly 'junit:junit:4.+'
+    implementation 'org.apache.commons:commons-csv:1.4'
+    testCompileOnly 'junit:junit:4.12'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.1'
     test
 }
 
 test {
 	useJUnitPlatform()
-    implementation 'org.apache.commons:commons-csv:1.4'
 }
