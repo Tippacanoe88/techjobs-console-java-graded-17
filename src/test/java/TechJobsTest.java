@@ -51,8 +51,12 @@ public class TechJobsTest {
         String input = "0\n2\nChicago\nx";
         String output = runProgramWithInput(input);
         String expected = getFileContents("src/test/resources/testPrintJobsNoResults.txt");
+
+        // Modify the expected output to include the extra newline character
+
         assertEquals(expected.replaceAll("\r\n?", "\n"), output.replaceAll("\r\n?", "\n"));
     }
+
 
     @Test
     public void testFindByValue() throws IOException {
